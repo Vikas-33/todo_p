@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+    <h2>My Tasks</h2>
+    <a href="{% url 'add_task' %}" class="btn btn-primary">➕ Add Task</a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Priority</th>
+            <th>Due Date</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.title }}</td>
+            <td>{{ task.priority }}</td>
+            <td>{{ task.due_date|date:"Y-m-d H:i" }}</td>
+            <td>{{ task.category }}</td>
+            <td>
+                {% if task.is_completed %}
+                    ✅ Completed
+                {% else %}
+                    ❌ Pending
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'edit_task' task.id %}" class="btn btn-warning btn-sm">✏️ Edit</a>
+                <a href="{% url 'toggle_task' task.id %}" class="btn btn-info btn-sm">
+                    {% if task.is_completed %}↩️ Mark Incomplete{% else %}✔️ Mark Complete{% endif %}
+                </a>
+                <a href="{% url 'delete_task' task.id %}" class="btn btn-danger btn-sm">🗑️ Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
