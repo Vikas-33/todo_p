@@ -5,7 +5,6 @@ from .models import Task
 from .forms import TaskForm
 
 
-# Create your views here.
 
 # List all tasks
 def task_list(request):
